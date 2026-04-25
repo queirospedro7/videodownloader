@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Downloader — Video &amp; Audio</title>
+
+  <!-- Favicon — SVG inline, sem ficheiros externos -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23F04E00'/><path d='M16 6v14M10 14l6 6 6-6M8 24h16' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>"/>
+  <!-- Fallback PNG para browsers antigos -->
+  <link rel="alternate icon" href="data:image/png;base64,iVBORw0KGgo="/>
+
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<!-- ============================================================
+     INTRO
+============================================================ -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-wipe"></div>
+  <div class="intro-content">
+    <div class="intro-icon-wrap">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+    </div>
+    <div class="intro-text-group">
+      <div class="intro-wordmark">Downloader</div>
+      <div class="intro-line"></div>
+      <div class="intro-sub">Video &amp; Audio · Sem limites</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP
+============================================================ -->
+<div id="app">
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <div class="nav-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.3"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </div>
+      <span class="nav-name">Downloader</span>
+    </a>
+    <div class="nav-right">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Online
+      </div>
+      <!-- Theme toggle -->
+      <button class="btn-theme" id="btnTheme" title="Alternar tema" aria-label="Alternar modo claro/escuro">
+        <!-- Moon (shown in light mode) -->
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <!-- Sun (shown in dark mode) -->
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1"  x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22"   x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1"  y1="12" x2="3"  y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78"  x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        Gratuito &amp; sem limites
+      </div>
+      <h1>Descarrega <b>qualquer</b><br/>video ou audio</h1>
+      <p>Cola a URL, escolhe a qualidade e clica baixar.<br/>
+         Sem software extra. Funciona sempre.</p>
+    </div>
+
+    <!-- CARD -->
+    <div class="card" id="mainCard">
+
+      <!-- ── STEP 1: URL ── -->
+      <div class="c-section" id="secUrl">
+        <div class="s-label">URL do video</div>
+        <div class="url-row">
+          <div class="url-field">
+            <svg class="url-field-icon" width="15" height="15" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <input id="urlInput" class="url-input" type="url"
+                   placeholder="https://youtube.com/watch?v=..."
+                   autocomplete="off" spellcheck="false"
+                   aria-label="URL do video"/>
+            <button class="btn-paste" id="btnPaste" title="Colar URL">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+          </div>
+          <button class="btn-primary" id="btnFetch" aria-label="Analisar URL">
+            <span id="fetchTxt">Analisar</span>
+            <span class="spin hidden" id="fetchSpin" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <!-- URL feedback -->
+        <div class="feedback error hidden" id="urlFeedback" role="alert">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="urlFeedbackTxt"></span>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: VIDEO INFO ── -->
+      <div class="c-section hidden" id="secInfo">
+        <div class="info-row" id="infoRow">
+          <div class="thumb-wrap">
+            <img id="thumbImg" src="" alt="Thumbnail"/>
+            <span class="thumb-dur hidden" id="thumbDur"></span>
+          </div>
+          <div class="info-meta">
+            <div class="info-title" id="infoTitle"></div>
+            <div class="info-tags" id="infoTags"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: FORMAT PICKER ── -->
+      <div class="c-section hidden" id="secFmt">
+        <div class="s-label">Formato &amp; qualidade</div>
+
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-btn active" data-mode="video">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+            Video
+          </button>
+          <button class="mode-btn" data-mode="audio">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+            Audio
+          </button>
+        </div>
+
+        <div class="q-wrap" id="qWrap"></div>
+
+        <!-- Format feedback (no format selected) -->
+        <div class="feedback info hidden" id="fmtFeedback">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>Seleciona uma qualidade para continuar.</span>
+        </div>
+
+        <button class="btn-download" id="btnDl" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Baixar
+        </button>
+      </div>
+
+      <!-- ── STEP 4: PROGRESS ── -->
+      <div class="c-section hidden" id="secProg">
+        <div class="prog-header">
+          <span class="prog-title" id="progTitle">A preparar...</span>
+          <span class="prog-pct"   id="progPct">0%</span>
+        </div>
+        <div class="prog-track">
+          <div class="prog-bar" id="progBar"></div>
+        </div>
+        <div class="prog-stats">
+          <div class="prog-stat hidden" id="statSpeed">
+            <span class="prog-stat-label">Velocidade</span>
+            <span class="prog-stat-value" id="statSpeedVal"></span>
+          </div>
+          <div class="prog-stat hidden" id="statEta">
+            <span class="prog-stat-label">Tempo restante</span>
+            <span class="prog-stat-value" id="statEtaVal"></span>
+          </div>
+          <div class="prog-stat hidden" id="statSize">
+            <span class="prog-stat-value" id="statSizeVal"></span>
+          </div>
+        </div>
+
+        <!-- Done -->
+        <div class="state-done hidden" id="stateDone">
+          <div class="done-circle">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <p class="done-h">Download concluido!</p>
+          <p class="done-p" id="donePath"></p>
+          <button class="btn-ghost" id="btnNew">Novo download</button>
+        </div>
+
+        <!-- Error -->
+        <div class="state-err hidden" id="stateErr">
+          <div class="err-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <p class="err-h">Erro no download</p>
+          <p class="err-p" id="errDetail"></p>
+          <button class="btn-ghost" id="btnRetry">Tentar novamente</button>
+        </div>
+      </div>
+
+    </div><!-- /card -->
+
+    <!-- PLATFORM STRIP -->
+    <div class="plat-strip">
+      <span class="plat-label">Suporta</span>
+      <span class="plat-chip">YouTube</span>
+      <span class="plat-chip">Instagram</span>
+      <span class="plat-chip">TikTok</span>
+      <span class="plat-chip">Twitter / X</span>
+      <span class="plat-chip">Vimeo</span>
+      <span class="plat-chip">Facebook</span>
+      <span class="plat-chip">SoundCloud</span>
+      <span class="plat-chip">+1000 mais</span>
+    </div>
+
+  </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Powered by <a href="https://github.com/yt-dlp/yt-dlp" target="_blank">yt-dlp</a>
+    <span class="footer-sep">/</span>
+    FFmpeg incluido &mdash; sem instalacoes extras
+  </footer>
+
+</div>
+</div><!-- /app -->
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
